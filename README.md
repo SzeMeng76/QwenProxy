@@ -388,6 +388,65 @@ GET /models (免认证)
 }
 ```
 
+### 📋 推荐模型列表
+
+所有模型均支持 **1M tokens** 上下文长度。
+
+#### 🎯 主要模型
+
+| 模型 ID | 说明 | 功能支持 | 适用场景 |
+|---------|------|----------|----------|
+| `qwen3.5-plus` | 最新旗舰模型 | vision/thinking/search/audio/video | 复杂任务、多模态处理 |
+| `qwen3.5-flash` | 快速版本 | vision/thinking/search | 日常对话、快速响应 |
+| `qwen-max-latest` | 通义千问 Max | vision/thinking/search | 高质量输出 |
+| `qwen-plus-latest` | 通义千问 Plus | vision/thinking | 平衡性能与成本 |
+| `qwen-turbo-latest` | 通义千问 Turbo | 基础对话 | 简单任务、高并发 |
+
+#### 🎨 功能变体（后缀）
+
+在基础模型后添加后缀启用特定功能：
+
+| 后缀 | 功能 | 示例 |
+|------|------|------|
+| `-thinking` | 显示推理思考过程 | `qwen3.5-plus-thinking` |
+| `-search` | 启用联网搜索 | `qwen3.5-plus-search` |
+| `-thinking-search` | 思考 + 搜索组合 | `qwen3.5-plus-thinking-search` |
+| `-image` | 文本生成图片 | `qwen3.5-plus-image` |
+| `-video` | 文本生成视频 | `qwen3.5-plus-video` |
+| `-image-edit` | 图片编辑修改 | `qwen3.5-plus-image-edit` |
+
+#### 🖥️ CLI 端点模型
+
+通过 `/cli/v1/chat/completions` 访问，支持 256K 上下文和原生工具调用：
+
+| 模型 ID | 说明 |
+|---------|------|
+| `qwen3-coder-plus` | Qwen3 代码模型 Plus 版 |
+| `qwen3-coder-flash` | Qwen3 代码模型快速版 |
+| `coder-model` | Qwen 3.5 Plus（带思维链，256K 上下文） |
+| `qwen3.5-plus` | `coder-model` 的别名 |
+
+#### 💡 使用建议
+
+- **日常对话**：`qwen3.5-flash`（速度快）
+- **复杂推理**：`qwen3.5-plus-thinking`（看思考过程）
+- **需要搜索**：`qwen3.5-plus-search`（实时信息）
+- **图片识别**：`qwen3.5-plus` + `image_url`（原生支持 vision）
+- **图片生成**：`qwen3.5-plus-image`
+- **代码任务**：`qwen3-coder-plus`（CLI 端点）
+
+#### ⚠️ 使用限制
+
+**chat.qwen.ai 网页版账号：**
+- **免费账号**：每天约 2000 次调用（API 调用限制）
+- **Qwen Code/CLI**：免费，配额 60 请求/分钟
+- **付费账号**：更高配额（具体见[通义千问官网](https://qwen.ai)）
+
+**高并发建议：**
+- 配置多个账号实现轮询
+- 使用代理池避免单 IP 限速（见[高并发说明](#⚠️-高并发说明)）
+- 对于高频调用场景，建议使用阿里云百炼平台的 API（按量付费）
+
 ### 💬 聊天对话
 
 发送聊天消息并获取 AI 回复。
